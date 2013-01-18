@@ -48,6 +48,7 @@ public class GLES20Renderer implements GLSurfaceView.Renderer {
             "varying vec2 vTexCoord; " +
             "void main() {" +
             "  gl_FragColor.rb = vTexCoord;" +
+            "  gl_FragColor.ag = vec2(0.0, 0.0);" +
             "}";
 
 	private int blobProgramId;
@@ -240,22 +241,24 @@ public class GLES20Renderer implements GLSurfaceView.Renderer {
 
         GLES20.glUniform1f(transparencyHandle, 1.0f);
         
-        // Enable a handle to the triangle vertices
-        GLES20.glEnableVertexAttribArray(positionHandle);
-        GLES20.glEnableVertexAttribArray(texCoordHandle);
-
-        
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
         GLES20.glUniform1i(samplerHandle, 0);
         
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         GLES20.glEnable(GLES20.GL_BLEND);
+
+        // Enable a handle to the triangle vertices
+        GLES20.glEnableVertexAttribArray(positionHandle);
+        GLES20.glEnableVertexAttribArray(texCoordHandle);
+	        
+        // Apply the projection and view transformation
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, localMatrix, 0);        
         
         // Draw the square
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, drawOrder.length,
                               GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
-        
+
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(positionHandle);
         GLES20.glDisableVertexAttribArray(texCoordHandle);
