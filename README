@@ -1,5 +1,7 @@
 Created by Liquidvapour
 
-This project was created to demonstrate a glich found doing OpenGL ES 2.0 work on Android.
+This project was created to demonstrate a glitch found doing OpenGL ES 2.0 work on Android.
 
-This glich shows itself on the Sony Ericsson Arc S (LT18i) 2.3.4 Build number 4.0.2.A.0.62.
+This glitch shows itself on the Sony Ericsson Arc S (LT18i) 2.3.4 Build number 4.0.2.A.0.62.
+
+Update: This "glitch" was caused by not initialising all colour channels in a pixel shader. Dough! 
